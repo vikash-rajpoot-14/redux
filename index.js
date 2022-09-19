@@ -69,7 +69,7 @@ const rootReducer=combineReducer({
 //iii.dispatch = allow state to be updated 
  const store =createStore(rootReducer,applyMiddleware(logger))
  console.log("initial state",store.getState())
- const unsubscribe=store.subscribe(()=>{})
+ const unsubscribe=store.subscribe()
  store.dispatch(buyCake())
  store.dispatch(buyCake())
  store.dispatch(buyCake())
