@@ -5,6 +5,8 @@
 
 const redux =require('redux')
 const createStore  = redux.createStore
+const combineReducer =redux.combineReducers
+
 const BUY_CAKE="BUY_CAKE"
 const BUY_ICECREAM="BUY_ICECREAM"
 
@@ -27,17 +29,24 @@ function buyIceCream(){
 
 // REDUCER---(ppreviousState,action)=>newState
 
-const initialState={
-    totalCake:10,
+const initialCakeState={
+    totalCake:10
+}
+const initialIceCreamState={
     totalIceCream:15
 }
 
-const reducer=(state=initialState,action)=>{
+const cakeReducer=(state=initialCakeState,action)=>{
      switch(action.type){
         case BUY_CAKE:return{
             ...state,
             totalCake:state.totalCake-1
         }
+        default: return state
+     }
+}
+const iceCreamReducer=(state=initialIceCreamState,action)=>{
+     switch(action.type){
         case BUY_ICECREAM:return{
             ...state,
             totalIceCream:state.totalIceCream-1
@@ -46,11 +55,15 @@ const reducer=(state=initialState,action)=>{
      }
 }
 
+const rootReducer=combineReducer({
+    cake:cakeReducer,
+    iceCream:iceCreamReducer
+})
 //3. STORE =----==--=HAVE THREE INBUILT FUNCTION
 //i.getState= gallow access to the state
 //ii.subscribe = show the changed state to the programmer(Register listeners)
 //iii.dispatch = allow state to be updated 
- const store =createStore(reducer)
+ const store =createStore(rootReducer)
  console.log("initial state",store.getState())
  const unsubscribe=store.subscribe(()=>console.log("updated state",store.getState()))
  store.dispatch(buyCake())
