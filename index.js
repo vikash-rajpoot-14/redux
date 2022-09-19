@@ -6,21 +6,30 @@
 const redux =require('redux')
 const createStore  = redux.createStore
 const BUY_CAKE="BUY_CAKE"
+const BUY_ICECREAM="BUY_ICECREAM"
 
 
-//1.ACTION 
+//1.ACTION CREATOR --what to do
 function buyCake(){
     //return ACTION as object by this function
     return {
         type:BUY_CAKE,
-        info:"first redux cake"
+        info:"first redux BUY_CAKE"
+    }
+}
+function buyIceCream(){
+    //return ACTION as object by this function
+    return {
+        type:BUY_ICECREAM,
+        info:"first redux BUY_ICECREAM"
     }
 }
 
 // REDUCER---(ppreviousState,action)=>newState
 
 const initialState={
-    totalCake:10
+    totalCake:10,
+    totalIceCream:15
 }
 
 const reducer=(state=initialState,action)=>{
@@ -28,6 +37,10 @@ const reducer=(state=initialState,action)=>{
         case BUY_CAKE:return{
             ...state,
             totalCake:state.totalCake-1
+        }
+        case BUY_ICECREAM:return{
+            ...state,
+            totalIceCream:state.totalIceCream-1
         }
         default: return state
      }
@@ -38,14 +51,14 @@ const reducer=(state=initialState,action)=>{
 //ii.subscribe = show the changed state to the programmer(Register listeners)
 //iii.dispatch = allow state to be updated 
  const store =createStore(reducer)
- console.log("initial=state",store.getState())
+ console.log("initial state",store.getState())
  const unsubscribe=store.subscribe(()=>console.log("updated state",store.getState()))
  store.dispatch(buyCake())
  store.dispatch(buyCake())
  store.dispatch(buyCake())
+ store.dispatch(buyIceCream())
+ store.dispatch(buyIceCream())
  console.log('done')
  unsubscribe()
- store.dispatch(buyCake())
- console.log("final state",store.getState())
- console.log("fianl done");
+
 
